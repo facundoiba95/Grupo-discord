@@ -16,7 +16,7 @@ const messageEmail = document.querySelector('.message-email');
 const messagePassword = document.querySelector('.messagge-pass');
 
 const validarEmail = e => {
-    e.preventDefault;
+    e.preventDefault();
 
     const inputEmail = email.value.trim();
 
@@ -25,6 +25,7 @@ const validarEmail = e => {
         return;
     } else if(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,4})+$/.test(inputEmail)){
         email.style.border= '3px solid green'
+        messageEmail.innerHTML='';
     } else {
         messageEmail.innerHTML = 'Email incorrecto'
         email.style.border = '3px solid red'
@@ -32,39 +33,38 @@ const validarEmail = e => {
 }
 
 const validarPassword = e => {
-    e.preventDefault()
-    
-    const passwordValue = password.value.trim();
+    e.preventDefault();
 
+    const passwordValue = password.value.trim();
     const lowerCase = /[a-z]/g;
     const upperCase = /[A-Z]/g;
     const number = /[0-9]/g;
-    const symbol = /[.*+\-?^${}()|[\]\\_@]/g;
+    const symbol = /(?=.[-_.?/!@#$%^&])/g
     
 
     if(passwordValue == ''){
         alert('El campo esta vacio!')
+        messagePassword.innerHTML ='';
         return;
     }
 
     if(!passwordValue.match(lowerCase)){
         messagePassword.textContent = 'Debes incluir una minuscula';
+        password.style.border= '2px solid red'
     } else if (!passwordValue.match(upperCase)){
         messagePassword.textContent = 'Debes incluir una mayuscula';
+        password.style.border= '2px solid red'
     } else if (!passwordValue.match(number)){
         messagePassword.innerHTML = 'Debes inclui un numero';
+        password.style.border= '2px solid red'
     } else if (!passwordValue.match(symbol)){
         messagePassword.innerHTML = 'Debes incluir un simbolo'
+        password.style.border= '2px solid red'
     } else {
         messagePassword.innerHTML = 'Contraseña Correcta!'
+        password.style.border ='2px solid green'
     }
-
-
 }
-
-
-
-
 
 
 const init = () => {
@@ -75,9 +75,3 @@ const init = () => {
 }
 
 init();
-
-
-
-
-
-
