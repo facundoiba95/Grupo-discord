@@ -1,83 +1,76 @@
-let pizza = [
-    {
-        id: 1,
-        nombre: "muzzarella",
-        ingredientes: ["muzzarella", "salsa de tomate", "aceitunas"],
-        precio: 500,
-    },
-    {
-        id: 2,
-        nombre: "calabresa",
-        ingredientes: ["queso", "longaniza", "salsa de tomate"],
-        precio: 900,
-    },
-    {
-        id: 3,
-        nombre: "fugazzeta",
-        ingredientes: ["queso", "cebolla", "aceitunas"],
-        precio: 750,
-    },
-    {
-        id: 4,
-        nombre: "napolitana",
-        ingredientes: ["queso", "tomate", "albahaca", "aceite de oliva"],
-        precio: 1000,
-    },
-    {
-        id: 5,
-        nombre: "cuatro quesos",
-        ingredientes: ["muzzarella", "parmesano", "roquefort", "robiola"],
-        precio: 900,
-    },
-    {
-        id: 6,
-        nombre: "argentina",
-        ingredientes: ["tomate", "cebolla", "queso"],
-        precio: 600,
-    },
-]
+// 1. Hacer un menu (navbar) que tenga un logo el icono de menu y adentro 4 enlaces que esten ocultos. Hacer un addEventListener al menu para desplegar los elementos.
 
- //    Vamos a utilizar el mismo array de objetos "Pizzas🍕" del desafío general anterior. 
+// 2. Validacion de forms,
+//    Hacer un form que tenga email y contraseña y que valide que el email sea un email y la contraseña tenga mayuscula, minuscula, un numero y un simbolo. Si da error, renderizar en el html el texto con un error. Ej, Email invalido / La contraseña tiene que tener una mayuscula, minuscula, un numero y simbolo
 
-// 👉 Crear un archivo HTML que contenga un h2, un h4, un input number y un botón. 
+// 3. Hacer un input y un boton de enviar. Crear una funcion para pintar en el html lo que escribamos en el input cuando aprentemos el boton de enviar. Y que los datos persistan en el local storage.
 
-// 👉 El desafío será, al tocar el botón, capturar el valor ingresado en el input.
-// 👉 Renderizar en el h2 el nombre y en el h4 el precio de la pizza cuyo id coincida con el numero ingresado en el input. 
+// 4. Tenemos el siguiente array de objetos, renderizar cada objeto en una card. (Que queden lindas) 
 
-// 🚨 Si no coincide con ningún id, renderizar un mensaje de error. 
-
+//EJERCICIO 2
 const form = document.querySelector('.form');
-const input = document.querySelector('.input');
-const btn = document.querySelector('.btn');
-const titulo = document.querySelector('.titulo');
-const precio = document.querySelector('.precio');
+const password = document.querySelector('.password');
+const email = document.querySelector('.email');
+const ingresar = document.querySelector('.ingresar');
+const messageEmail = document.querySelector('.message-email');
+const messagePassword = document.querySelector('.messagge-pass');
 
-let nuevoPizza= [];
+const validarEmail = e => {
+    e.preventDefault;
 
-const isEmpty = value => (value === '' ? true : false)
+    const inputEmail = email.value.trim();
 
-const addPizza = e => {
-    e.preventDefault();
-
-    const inputValue = input.value.trim();
-
-    if(isEmpty(inputValue)){
-        alert('Esta vacio!')
+    if(!inputEmail.length){
+        alert('El campo esta vacio!')
         return;
-    } else if(
-        nuevoPizza = pizza.find((pizza) => pizza.id == inputValue)){
-          titulo.textContent = `La Pizza ${nuevoPizza.nombre}`;
-          precio.textContent = `Tiene un costo de $${nuevoPizza.precio}`
-        return;
+    } else if(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,4})+$/.test(inputEmail)){
+        email.style.border= '3px solid green'
     } else {
-       alert('No tenemos esa Pizza !')
+        messageEmail.innerHTML = 'Email incorrecto'
+        email.style.border = '3px solid red'
+    }
+}
+
+const validarPassword = e => {
+    e.preventDefault()
+    
+    const passwordValue = password.value.trim();
+
+    const lowerCase = /[a-z]/g;
+    const upperCase = /[A-Z]/g;
+    const number = /[0-9]/g;
+    const symbol = /[.*+\-?^${}()|[\]\\_@]/g;
+    
+
+    if(passwordValue == ''){
+        alert('El campo esta vacio!')
         return;
     }
 
+    if(!passwordValue.match(lowerCase)){
+        messagePassword.textContent = 'Debes incluir una minuscula';
+    } else if (!passwordValue.match(upperCase)){
+        messagePassword.textContent = 'Debes incluir una mayuscula';
+    } else if (!passwordValue.match(number)){
+        messagePassword.innerHTML = 'Debes inclui un numero';
+    } else if (!passwordValue.match(symbol)){
+        messagePassword.innerHTML = 'Debes incluir un simbolo'
+    } else {
+        messagePassword.innerHTML = 'Contraseña Correcta!'
+    }
+
+
 }
 
+
+
+
+
+
 const init = () => {
-    form.addEventListener('submit', addPizza)
+    // form.addEventListener('submit', addPizza)
+    form.addEventListener('submit', validarEmail)
+    form.addEventListener('submit', validarPassword)
 
 }
 
